@@ -1,0 +1,45 @@
+Name     VGA Vertical Timing ;
+PartNo   GAL22V10C;
+Date     10/28/2024, 11:18:26 PM ;
+Revision 01 ;
+Designer caeca3d32ab4fbf5ac3d3903622b0dd141ed2b10e05af4851303696c1f903f21 ;
+Company   ;
+Assembly None ;
+Location  ;
+Device   g22v10;
+
+PIN 1 = C0; /* PIN TYPES: INOUT TDI */
+PIN 2 = C1; 
+PIN 3 = C2; 
+PIN 4 = C3; 
+PIN 5 = C4; /* PIN TYPES: INOUT */
+PIN 6 = C5; /* PIN TYPES: INOUT TMS */
+PIN 7 = C6; /* PIN TYPES: INOUT */
+PIN 8 = C7; /* PIN TYPES: INOUT */
+PIN 9 = C8;
+PIN 10 = C9;
+PIN 11 = H_VISIBLE; /* INPUT FROM Horizontal timing PLD */
+
+
+PIN 14 = !V_VISIBLE; /* PIN TYPES: INOUT */
+PIN 15 = V_F_PORCH; /* PIN TYPES: INOUT */
+PIN 16 = !V_SYNC; /* PIN TYPES: INOUT */
+PIN 17 = V_B_PORCH; /* PIN TYPES: INOUT */
+PIN 20 = !V_RESET_COUNTER;
+PIN 21 = !SCREEN_VISIBLE;
+
+
+FIELD Data = [C9..0];  /*Assigns Data name to group of bits.*/
+FIELD V_Decodes =[ V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
+/* Pulse coming from first HC161 bit is 1/2 of the H_SYNC. */
+/* So timing calucation requires only half the rows */
+
+
+TABLE Data => V_Decodes {
+    [258]      => 'b'1000;                   /* V_F_PORCH */
+    [259..25C] => 'b'0100;                   /* V_SYNC*/
+    [25D..274] => 'b'0010;                   /* V_B_PORCH */
+    [275..2FF] => 'b'0001;                   /* V_RESET_COUNTER */
+}
+V_VISIBLE = !V_F_PORCH & !V_SYNC & !V_B_PORCH & !V_RESET_COUNTER;
+SCREEN_VISIBLE = V_VISIBLE & H_VISIBLE;

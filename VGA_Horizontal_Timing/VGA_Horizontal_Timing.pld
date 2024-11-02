@@ -1,0 +1,40 @@
+Name     VGA Horizontal Timing;
+PartNo   GAL22V10C;
+Date     10/28/2024, 11:18:26 PM ;
+Revision 01 ;
+Designer caeca3d32ab4fbf5ac3d3903622b0dd141ed2b10e05af4851303696c1f903f21 ;
+Company   ;
+Assembly None ;
+Location  ;
+Device   g22v10;
+
+/* Custom Cupl code below */
+PIN 1 = C0; /* PIN TYPES: INOUT TDI */
+PIN 2 = C1; 
+PIN 3 = C2; 
+PIN 4 = C3; 
+PIN 5 = C4; /* PIN TYPES: INOUT */
+PIN 6 = C5; /* PIN TYPES: INOUT TMS */
+PIN 7 = C6; /* PIN TYPES: INOUT */
+PIN 8 = C7; /* PIN TYPES: INOUT */
+
+
+PIN 16 = H_VISIBLE; /* PIN TYPES: INOUT */
+PIN 17 = H_F_PORCH; /* PIN TYPES: INOUT */
+PIN 18 = !H_SYNC; /* PIN TYPES: INOUT */
+PIN 19 = H_B_PORCH; /* PIN TYPES: INOUT */
+PIN 20 = !H_RESET_COUNTER; /* PIN TYPES: INOUT PD */
+
+
+FIELD Data = [C7..0];  /*Assigns Data name to group of bits.*/
+FIELD H_Decodes =[H_VISIBLE, H_F_PORCH, H_SYNC, H_B_PORCH, H_RESET_COUNTER];
+
+
+TABLE Data => H_Decodes {
+    [0..A0] => 'b'10000;                     /* VISIBLE */
+    [A1..A8] => 'b'01000;                    /* H_F_PORCH */
+    [A9..C1] => 'b'00100;                    /* H_SYNC*/
+    [C2..D2]=> 'b'00010;                     /* H_B_PORCH */
+    [D3..FF]=> 'b'00001;                     /* H_RESET_COUNTER */
+}
+

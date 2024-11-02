@@ -1,0 +1,17 @@
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/bin/Debug/net8.0/BitmapMapper
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/bin/Debug/net8.0/BitmapMapper.deps.json
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/bin/Debug/net8.0/BitmapMapper.runtimeconfig.json
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/bin/Debug/net8.0/BitmapMapper.dll
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/bin/Debug/net8.0/BitmapMapper.pdb
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/bin/Debug/net8.0/Aspose.Drawing.Common.dll
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.csproj.AssemblyReference.cache
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.GeneratedMSBuildEditorConfig.editorconfig
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.AssemblyInfoInputs.cache
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.AssemblyInfo.cs
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.csproj.CoreCompileInputs.cache
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMa.42C3C9C7.Up2Date
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.dll
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/refint/BitmapMapper.dll
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.pdb
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/BitmapMapper.genruntimeconfig.cache
+/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/Debug/net8.0/ref/BitmapMapper.dll

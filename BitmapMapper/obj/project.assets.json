@@ -1,0 +1,112 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "Aspose.Drawing.Common/24.10.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Aspose.Drawing.Common.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Aspose.Drawing.Common.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Aspose.Drawing.Common/24.10.0": {
+      "sha512": "BmgmzFer5Dbux1YzdbrLekbu4TldBblKs48KLC4wOA4ruokjApBrA8ZWDptUuzLvNmCc+9vYn08uhaXKQzQGrA==",
+      "type": "package",
+      "path": "aspose.drawing.common/24.10.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Aspose.Drawing for .NET.Agreements.pdf",
+        "License.txt",
+        "aspose.drawing.common.24.10.0.nupkg.sha512",
+        "aspose.drawing.common.nuspec",
+        "icon.png",
+        "lib/net20/Aspose.Drawing.Common.dll",
+        "lib/net20/Aspose.Drawing.Common.xml",
+        "lib/netstandard2.0/Aspose.Drawing.Common.dll",
+        "lib/netstandard2.0/Aspose.Drawing.Common.xml"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "Aspose.Drawing.Common >= 24.10.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/vsadmin/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/BitmapMapper.csproj",
+      "projectName": "BitmapMapper",
+      "projectPath": "/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/BitmapMapper.csproj",
+      "packagesPath": "/home/vsadmin/.nuget/packages/",
+      "outputPath": "/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/vsadmin/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "dependencies": {
+          "Aspose.Drawing.Common": {
+            "target": "Package",
+            "version": "[24.10.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

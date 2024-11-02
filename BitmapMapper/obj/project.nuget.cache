@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "cRk24CBeCsI=",
+  "success": true,
+  "projectFilePath": "/home/vsadmin/Projects/Personal/VGA_PLD/BitmapMapper/BitmapMapper.csproj",
+  "expectedPackageFiles": [
+    "/home/vsadmin/.nuget/packages/aspose.drawing.common/24.10.0/aspose.drawing.common.24.10.0.nupkg.sha512"
+  ],
+  "logs": []
+}

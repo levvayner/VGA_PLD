@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "BitmapMapper/1.0.0": {
+        "dependencies": {
+          "Aspose.Drawing.Common": "24.10.0"
+        },
+        "runtime": {
+          "BitmapMapper.dll": {}
+        }
+      },
+      "Aspose.Drawing.Common/24.10.0": {
+        "runtime": {
+          "lib/netstandard2.0/Aspose.Drawing.Common.dll": {
+            "assemblyVersion": "24.10.0.0",
+            "fileVersion": "24.10.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BitmapMapper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Aspose.Drawing.Common/24.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BmgmzFer5Dbux1YzdbrLekbu4TldBblKs48KLC4wOA4ruokjApBrA8ZWDptUuzLvNmCc+9vYn08uhaXKQzQGrA==",
+      "path": "aspose.drawing.common/24.10.0",
+      "hashPath": "aspose.drawing.common.24.10.0.nupkg.sha512"
+    }
+  }
+}
