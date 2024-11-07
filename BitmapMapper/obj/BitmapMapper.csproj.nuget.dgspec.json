@@ -46,6 +46,10 @@
             "Aspose.Drawing.Common": {
               "target": "Package",
               "version": "[24.10.0, )"
+            },
+            "System.IO.Ports": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

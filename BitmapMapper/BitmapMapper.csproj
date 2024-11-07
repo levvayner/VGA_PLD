@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aspose.Drawing.Common" Version="24.10.0" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

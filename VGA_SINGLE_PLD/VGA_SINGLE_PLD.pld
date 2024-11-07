@@ -1,0 +1,92 @@
+Name     VGA_SINGLE_PLD ;
+PartNo   ATF1504AS;
+Date     11/6/2024, 10:22:47 AM ;
+Revision 01 ;
+Designer caeca3d32ab4fbf5ac3d3903622b0dd141ed2b10e05af4851303696c1f903f21 ;
+Company   ;
+Assembly None ;
+Location  ;
+Device   f1504plcc44;
+
+/* Custom Cupl code below */
+PIN 13 = MODE0;
+PIN 14 = MODE1;
+/* VERTICAL */
+PIN 1 = V0; /* PIN TYPES: INOUT TDI */
+PIN 2 = V1; 
+PIN 4 = V2; 
+PIN 5 = V3; 
+PIN 6 = V4; /* PIN TYPES: INOUT */
+PIN 7 = V5; /* PIN TYPES: INOUT TMS */
+PIN 8 = V6; /* PIN TYPES: INOUT */
+PIN 9 = V7; /* PIN TYPES: INOUT */
+PIN 11 = V8;
+PIN 12 = V9;
+NODE H_VISIBLE; /* INPUT FROM Horizontal timing PLD */
+
+
+PIN 16 = !V_VISIBLE; /* PIN TYPES: INOUT */
+PIN 17 = V_F_PORCH; /* PIN TYPES: INOUT */
+PIN 18 = !V_SYNC; /* PIN TYPES: INOUT */
+PIN 19 = V_B_PORCH; /* PIN TYPES: INOUT */
+PIN 20 = !V_RESET_COUNTER;
+PIN 21 = !SCREEN_VISIBLE;
+
+
+/* HORIZONTAL */
+
+PIN 24 = H0; /* PIN TYPES: INOUT TDI */
+PIN 25 = H1; 
+PIN 26 = H2; 
+PIN 27 = H3; 
+PIN 28 = H4; /* PIN TYPES: INOUT */
+PIN 29 = H5; /* PIN TYPES: INOUT TMS */
+PIN 31 = H6; /* PIN TYPES: INOUT */
+PIN 32 = H7; /* PIN TYPES: INOUT */
+
+
+/* PIN 36 = H_VISIBLE; */ /* PIN TYPES: INOUT */
+PIN 37 = H_F_PORCH; /* PIN TYPES: INOUT */
+PIN 38 = !H_SYNC; /* PIN TYPES: INOUT */
+PIN 39 = H_B_PORCH; /* PIN TYPES: INOUT */
+PIN 40 = !H_RESET_COUNTER; /* PIN TYPES: INOUT PD */
+
+
+
+FIELD HData = [MODE0, H7..0];  /*Assigns Data name to group of bits.*/
+FIELD H_Decodes =[H_VISIBLE, H_F_PORCH, H_SYNC, H_B_PORCH, H_RESET_COUNTER];
+
+
+TABLE HData => H_Decodes { /* 800x600 MODE, THEN 640x480 MODE */
+    [0..A0]     => 'b'10000;                   /* VISIBLE */
+    [A1..A8]    => 'b'01000;                   /* H_F_PORCH */
+    [A9..C1]    => 'b'00100;                   /* H_SYNC*/
+    [C2..D2]    => 'b'00010;                   /* H_B_PORCH */
+    [D3..FF]    => 'b'00001;                   /* H_RESET_COUNTER */
+    [100..1CB]  => 'b'10000;                   /* VISIBLE */
+    [1CC..1D0]  => 'b'01000;                   /* H_F_PORCH */
+    [1D1..1EF]  => 'b'00100;                   /* H_SYNC*/
+    [1F0..1FE]  => 'b'00010;                   /* H_B_PORCH */
+    [1FF]       => 'b'00001;                   /* H_RESET_COUNTER */
+}
+
+FIELD vData = [MODE0, V9..0];  /*Assigns Data name to group of bits.*/
+FIELD V_Decodes =[ V_VISIBLE, V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
+/* Pulse coming from first HC161 bit is 1/2 of the H_SYNC. */
+/* So timing calucation requires only half the rows */
+
+
+TABLE vData => V_Decodes {
+    [0..257]   => 'b'10000;                   /* VISIBLE */
+    [258]      => 'b'01000;                   /* V_F_PORCH */
+    [259..25C] => 'b'00100;                   /* V_SYNC*/
+    [25D..274] => 'b'00010;                   /* V_B_PORCH */
+    [275..3FF] => 'b'00001;                   /* V_RESET_COUNTER */
+    [400..5E0] => 'b'10000;                   /* VISIBLE */
+    [5E1..5EA] => 'b'01000;                   /* V_F_PORCH */
+    [5EB..5EC] => 'b'00100;                   /* V_SYNC*/
+    [5ED..60D] => 'b'00010;                   /* V_B_PORCH */
+    [60F..7FF] => 'b'00001;                   /* V_RESET_COUNTER */
+}
+
+SCREEN_VISIBLE = V_VISIBLE & H_VISIBLE;
