@@ -25,22 +25,19 @@ PIN 14 = !V_VISIBLE; /* PIN TYPES: INOUT */
 PIN 15 = V_F_PORCH; /* PIN TYPES: INOUT */
 PIN 16 = !V_SYNC; /* PIN TYPES: INOUT */
 PIN 17 = V_B_PORCH; /* PIN TYPES: INOUT */
-PIN 20 = !V_RESET_COUNTER;e
+PIN 20 = !V_RESET_COUNTER;
 PIN 21 = !SCREEN_VISIBLE;
 
 
 FIELD Data = [C9..0];  /*Assigns Data name to group of bits.*/
-FIELD V_Decodes =[ V_VISIBLE, V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
-/* Pulse coming from first HC161 bit is 1/2 of the H_SYNC. */
-/* So timing calucation requires only half the rows */
-
+FIELD V_Decodes =[  V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
 
 TABLE Data => V_Decodes {
-    [0..257]   => 'b'10000;
-    [258]      => 'b'01000;                   /* V_F_PORCH */
-    [259..25C] => 'b'00100;                   /* V_SYNC*/
-    [25D..274] => 'b'00010;                   /* V_B_PORCH */
-    [275..2FF] => 'b'00001;                   /* V_RESET_COUNTER */
+    /*[0..257]   => 'b'10000;*/
+    [258]      => 'b'1000;                   /* V_F_PORCH */
+    [259..25C] => 'b'0100;                   /* V_SYNC*/
+    [25D..274] => 'b'0010;                   /* V_B_PORCH */
+    [275..2FF] => 'b'0001;                   /* V_RESET_COUNTER */
 }
-/*V_VISIBLE = !V_F_PORCH & !V_SYNC & !V_B_PORCH & !V_RESET_COUNTER;*/
+V_VISIBLE = !V_F_PORCH & !V_SYNC & !V_B_PORCH & !V_RESET_COUNTER;
 SCREEN_VISIBLE = V_VISIBLE & H_VISIBLE;

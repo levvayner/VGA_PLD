@@ -1,7 +1,7 @@
 
 CUPL(WM)        5.0a  Serial# MW-10400000
 Device          g22v10  Library DLIB-h-40-1
-Created         Fri Nov 01 21:54:18 2024
+Created         Fri Nov 08 13:24:09 2024
 Name            VGA Horizontal Timing
 Partno          GAL22V10C
 Revision        01 
@@ -75,4 +75,4 @@ Location
 *L05824 00000100011101000001010011000011
 *L05856 00100011001001010110001100010011
 *CCB92
-*3902
+*3907
