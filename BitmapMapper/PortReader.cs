@@ -160,7 +160,7 @@ class PortReader
     {
 
         //var outStream = port.BaseStream;
-        ReadBytes(11, outStream); //get first ten into lines   
+        ReadBytes(15, outStream); //get first ten into lines   
 
         Console.WriteLine("---------------------");
         //Console.Write(">> ");

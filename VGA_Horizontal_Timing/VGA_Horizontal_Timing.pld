@@ -31,10 +31,10 @@ FIELD H_Decodes =[H_VISIBLE, H_F_PORCH, H_SYNC, H_B_PORCH, H_RESET_COUNTER];
 
 
 TABLE Data => H_Decodes {
-    [0..A0] => 'b'10000;                     /* VISIBLE */
-    [A1..A8] => 'b'01000;                    /* H_F_PORCH */
-    [A9..C1] => 'b'00100;                    /* H_SYNC*/
-    [C2..D2]=> 'b'00010;                     /* H_B_PORCH */
-    [D3..FF]=> 'b'00001;                     /* H_RESET_COUNTER */
+    [0..CB]     => 'b'10000;                 /* VISIBLE */
+    [CC..D0]    => 'b'1000;                  /* H_F_PORCH */
+    [D1..EF]    => 'b'0100;                  /* H_SYNC*/
+    [F0..FE]    => 'b'0010;                  /* H_B_PORCH */
+    [FF]        => 'b'0001;                  /* H_RESET_COUNTER */
 }
 

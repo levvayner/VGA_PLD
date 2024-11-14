@@ -5,9 +5,9 @@ internal static class Program
 {
     public const string ARDUINO_PORT = "/dev/ttyACM0";
 
-    public static int BitmapWidth = 160;
+    public static int BitmapWidth = 203;
     public static int BitmapPadWidth = 51;
-    public static int BitmapHeight = 255;
+    public static int BitmapHeight = 120;
     public static int BitmapPadHeight = 6;
     public static bool FillRAM = true;
     private static string InputFile;
@@ -90,7 +90,7 @@ internal static class Program
                 for (int x = 0; x < resized.Width; x++)
                 {
                     var color = resized.GetPixel(x, y);
-                    bytes[(y << 7) + x] = (byte)(((color.R/ 32) & 0x3) | ((color.G / 32) & 0x3) << 3 | (color.B / 64) << 6);
+                    bytes[(y << 8) + x] = (byte)(((color.R/ 32) & 0x7) << 5 | ((color.G / 32) & 0x7) << 2 | (color.B / 64));
                 }
             }
             Console.WriteLine($"Resized bitmap to {width}x{height}");
