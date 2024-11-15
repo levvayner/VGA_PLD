@@ -41,7 +41,7 @@ The components used in the schematic are available in the KiCad project's output
 Currently they are
 
 | Component                 | Source                                                                                 |
-| *------------------------ | *------------------------------------------------------------------------------------* |
+| ------------------------- | -------------------------------------------------------------------------------------- |
 | Arduino Due               | https://docs.arduino.cc/hardware/due                                                   |
 | Capactitor (0805) 560 pf  | ebay, mouser, digikey                                                                  |
 | Capacitor Tantalum        | ebay, mouser, digikey                                                                  |
