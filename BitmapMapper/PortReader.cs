@@ -40,8 +40,8 @@ class PortReader
                     data.Add(reader.ReadByte());
             }
             if(pad) 
-            for(int start = data.Count; start < 64*1024; start++)
-                data.Add(0);
+                for(int start = data.Count; start < 64*1024; start++)
+                    data.Add(0);
             //data.Add(0x0); //null terminator for file
 
             //port.Write(new[] { (byte)'c' },0,1);
@@ -160,7 +160,7 @@ class PortReader
     {
 
         //var outStream = port.BaseStream;
-        ReadBytes(15, outStream); //get first ten into lines   
+        ReadBytes(16, outStream); //get first ten into lines   
 
         Console.WriteLine("---------------------");
         //Console.Write(">> ");

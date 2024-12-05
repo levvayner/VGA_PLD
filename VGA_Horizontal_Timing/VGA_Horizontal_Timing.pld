@@ -17,6 +17,8 @@ PIN 5 = C4; /* PIN TYPES: INOUT */
 PIN 6 = C5; /* PIN TYPES: INOUT TMS */
 PIN 7 = C6; /* PIN TYPES: INOUT */
 PIN 8 = C7; /* PIN TYPES: INOUT */
+PIN 9 = C8;
+PIN 10 = C9;
 
 
 PIN 16 = H_VISIBLE; /* PIN TYPES: INOUT */
@@ -26,15 +28,16 @@ PIN 19 = H_B_PORCH; /* PIN TYPES: INOUT */
 PIN 20 = !H_RESET_COUNTER; /* PIN TYPES: INOUT PD */
 
 
-FIELD Data = [C7..0];  /*Assigns Data name to group of bits.*/
-FIELD H_Decodes =[H_VISIBLE, H_F_PORCH, H_SYNC, H_B_PORCH, H_RESET_COUNTER];
+FIELD Data = [C9..0];  /*Assigns Data name to group of bits.*/
+FIELD H_Decodes =[ H_F_PORCH, H_SYNC, H_B_PORCH, H_RESET_COUNTER];
 
 
 TABLE Data => H_Decodes {
-    [0..CB]     => 'b'10000;                 /* VISIBLE */
-    [CC..D0]    => 'b'1000;                  /* H_F_PORCH */
-    [D1..EF]    => 'b'0100;                  /* H_SYNC*/
-    [F0..FE]    => 'b'0010;                  /* H_B_PORCH */
-    [FF]        => 'b'0001;                  /* H_RESET_COUNTER */
+    /*[0..1A4]      => 'b'10000; */                /* VISIBLE */
+    [1B1..1BA]    => 'b'1000;                  /* H_F_PORCH */
+    [1BB..1E0]    => 'b'0100;                  /* H_SYNC*/
+    [1E1..1EF]    => 'b'0010;                  /* H_B_PORCH */
+    [1F0..1FF]    => 'b'0001;                  /* H_RESET_COUNTER */
 }
+H_VISIBLE = !H_F_PORCH & !H_SYNC & !H_B_PORCH & !H_RESET_COUNTER;
 

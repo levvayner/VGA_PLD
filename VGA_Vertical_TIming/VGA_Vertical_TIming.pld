@@ -34,7 +34,7 @@ FIELD V_Decodes =[  V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
 
 TABLE Data => V_Decodes {
     /*[0..257]   => 'b'10000;*/
-    [1E1..1E9]      => 'b'1000;                   /* V_F_PORCH */
+    [1E1..1E9] => 'b'1000;                   /* V_F_PORCH */
     [1EA..1EB] => 'b'0100;                   /* V_SYNC*/
     [1EC..20D] => 'b'0010;                   /* V_B_PORCH */
     [20E..21F] => 'b'0001;                   /* V_RESET_COUNTER */

@@ -1,4 +1,60 @@
-23667634754724462
+23680692811869795
+16bit-registers
+Fuse-resettable
+Fuseholder ATO Blade littelfuse Pudenz 2 Pin
+Fuseholder ATO Blade littelfuse Pudenz 2 Pin
+0
+2
+2
+16bit-registers
+HLCP-J100
+10-Element Red Bar Graph Array https://docs.broadcom.com/docs/AV02-1798EN
+10-Element Red Bar Graph Array
+0
+20
+20
+16bit-registers
+LED_CONNECTOR
+Through hole straight socket strip, 2x08, 2.54mm pitch, double cols (from Kicad 4.0.7), script generated
+Through hole socket strip THT 2x08 2.54mm double row
+0
+16
+16
+16bit-registers
+R_Array_Concave_4x1206
+Chip Resistor Network, ROHM MNR34 (see mnr_g.pdf)
+resistor array
+0
+8
+8
+16bit-registers
+R_Array_Convex_4x1206
+Chip Resistor Network, ROHM MNR34 (see mnr_g.pdf)
+resistor array
+0
+8
+8
+16bit-registers
+SOP44_28.5mmX16.03mm
+
+
+0
+44
+44
+16bit-registers
+SW_ARRAY4
+Through hole straight socket strip, 2x08, 2.54mm pitch, double cols (from Kicad 4.0.7), script generated
+Through hole socket strip THT 2x08 2.54mm double row
+0
+8
+8
+16bit-registers
+TE_5145154-4
+
+
+0
+120
+120
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)

@@ -1,5 +1,6 @@
 **/obj/**
 **/bin/**
-BitmapMapper/obj/Debug/net8.0/BitmapMapper.AssemblyInfo.cs
-BitmapMapper/obj/Debug/net8.0/BitmapMapper.AssemblyInfoInputs.cache
+BitmapMapper/obj/**
 VGA_SRAM_Shield/#auto_saved_files/**
+BitmapMapper/bin/**
+BitmapMapper/bin/Debug/net8.0/BitmapMapper.dll
