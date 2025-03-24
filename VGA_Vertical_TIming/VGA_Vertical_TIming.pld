@@ -18,6 +18,7 @@ PIN 7 = C6; /* PIN TYPES: INOUT */
 PIN 8 = C7; /* PIN TYPES: INOUT */
 PIN 9 = C8;
 PIN 10 = C9;
+PIN 23 = C10;
 PIN 11 = H_VISIBLE; /* INPUT FROM Horizontal timing PLD */
 
 
@@ -29,15 +30,23 @@ PIN 20 = !V_RESET_COUNTER;
 PIN 21 = !SCREEN_VISIBLE;
 
 
-FIELD Data = [C9..0];  /*Assigns Data name to group of bits.*/
-FIELD V_Decodes =[  V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
+FIELD Data = [C10..0];  /*Assigns Data name to group of bits.*/
+FIELD V_Decodes =[ V_VISIBLE,V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
 
 TABLE Data => V_Decodes {
-    /*[0..257]   => 'b'10000;*/
-    [1E1..1E9] => 'b'1000;                   /* V_F_PORCH */
-    [1EA..1EB] => 'b'0100;                   /* V_SYNC*/
-    [1EC..20D] => 'b'0010;                   /* V_B_PORCH */
-    [20E..21F] => 'b'0001;                   /* V_RESET_COUNTER */
+    /* Resolution 1 , 1024 x 768 @ 60Hz / 40MHz - effective 630 x 384 */   
+    [000..300] => 'b'10000;                  /* V_VISIBLE */ 
+    [301..303] => 'b'01000;                   /* V_F_PORCH */
+    [304..309] => 'b'00100;                   /* V_SYNC*/
+    [30A..326] => 'b'00010;                   /* V_B_PORCH */
+    [327..32F] => 'b'00001;                   /* V_RESET_COUNTER */   
+    /* Resolution 2 , 800x600 @ 16MHz 320x300 */
+    [400..657] => 'b'10000;                  /* V_VISIBLE */ 
+    [658..659] => 'b'01000;                   /* V_F_PORCH */
+    [65A..65D] => 'b'00100;                   /* V_SYNC*/
+    [65E..673] => 'b'00010;                   /* V_B_PORCH */
+    [674..69F] => 'b'00001;                   /* V_RESET_COUNTER */
+
 }
-V_VISIBLE = !V_F_PORCH & !V_SYNC & !V_B_PORCH & !V_RESET_COUNTER;
+/* V_VISIBLE = !V_F_PORCH & !V_SYNC & !V_B_PORCH & !V_RESET_COUNTER; */
 SCREEN_VISIBLE = V_VISIBLE & H_VISIBLE;

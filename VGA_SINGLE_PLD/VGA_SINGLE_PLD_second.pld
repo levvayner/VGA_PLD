@@ -1,0 +1,82 @@
+NAME VGA_TIMING;
+PARTNO ATF1504AS;
+DATE 10/25/2023;
+REVISION 01;
+DESIGNER YourName;
+COMPANY YourCompany;
+ASSEMBLY None;
+LOCATION U1;
+Device   f1504plcc44;
+
+PIN 2 = clk;  /* External clock input */
+
+/* 10-bit horizontal counter outputs */
+PIN 4 = hcount0;
+PIN 5 = hcount1;
+PIN 6 = hcount2;
+PIN 7 = hcount3;
+PIN 8 = hcount4;
+PIN 9 = hcount5;
+PIN 11 = hcount6;
+PIN 12 = hcount7;
+PIN 13 = hcount8;
+PIN 14 = hcount9;
+
+/* 10-bit vertical counter outputs */
+PIN 16 = vcount0;
+PIN 17 = vcount1;
+PIN 18 = vcount2;
+PIN 19 = vcount3;
+PIN 20 = vcount4;
+PIN 21 = vcount5;
+PIN 24 = vcount6;
+PIN 25 = vcount7;
+PIN 26 = vcount8;
+PIN 27 = vcount9;
+
+/* Sync signal outputs */
+PIN 28 = HSYNC;  /* Horizontal sync, active low */
+PIN 29 = VSYNC;  /* Vertical sync, active low */
+
+/* State machine registers (internal nodes) */
+NODE h_state0;
+NODE h_state1;
+NODE v_state0;
+NODE v_state1;
+
+/* Define fields for counters and state machines */
+FIELD hcount = [hcount9..0];
+FIELD vcount = [vcount9..0];
+FIELD h_state = [h_state1..0];
+FIELD v_state = [v_state1..0];
+FIELD v_state = [v_state1..0];
+
+/* Counter logic */
+/* Horizontal counter: increments every clock, resets at 799 (total 800 clocks) */
+hcount.D = (hcount == 799) ? 'd'0 : hcount + 1;
+
+/* Vertical counter: increments when hcount resets, resets at 524 (total 525 lines) */
+vcount.D = (hcount == 799) ? ((vcount == 524) ? 'd'0 : vcount + 1) : vcount;
+
+/* Horizontal state machine */
+/* States: 00 = ACTIVE, 01 = FRONT_PORCH, 10 = SYNC, 11 = BACK_PORCH */
+h_state.D = (h_state == 'b'00 & hcount == 639) ? 'b'01 :    /* End of active (640 pixels) */
+            (h_state == 'b'01 & hcount == 655) ? 'b'10 :    /* End of front porch (16 pixels) */
+            (h_state == 'b'10 & hcount == 751) ? 'b'11 :    /* End of sync pulse (96 pixels) */
+            (h_state == 'b'11 & hcount == 799) ? 'b'00 :    /* End of back porch (48 pixels) */
+            h_state;
+
+/* Vertical state machine */
+/* States: 00 = ACTIVE, 01 = FRONT_PORCH, 10 = SYNC, 11 = BACK_PORCH */
+v_state.D = (hcount == 799 & v_state == 'b'00 & vcount == 479) ? 'b'01 :  /* End of active (480 lines) */
+            (hcount == 799 & v_state == 'b'01 & vcount == 489) ? 'b'10 :  /* End of front porch (10 lines) */
+            (hcount == 799 & v_state == 'b'10 & vcount == 491) ? 'b'11 :  /* End of sync pulse (2 lines) */
+            (hcount == 799 & v_state == 'b'11 & vcount == 524) ? 'b'00 :  /* End of back porch (33 lines) */
+            v_state;
+
+/* Output logic */
+/* HSYNC is low during SYNC state ('b'10), high otherwise */
+HSYNC = ~(h_state == 'b'10);
+
+/* VSYNC is low during SYNC state ('b'10), high otherwise */
+VSYNC = ~(v_state == 'b'10);

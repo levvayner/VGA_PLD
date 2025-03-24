@@ -1,92 +1,129 @@
-Name     VGA_SINGLE_PLD ;
+Name     VGATiming;
 PartNo   ATF1504AS;
-Date     11/6/2024, 10:22:47 AM ;
-Revision 01 ;
-Designer caeca3d32ab4fbf5ac3d3903622b0dd141ed2b10e05af4851303696c1f903f21 ;
-Company   ;
-Assembly None ;
-Location  ;
-Device   f1504plcc44;
+Date     03/13/2025;  /* Updated to current date */
+Revision 02;          /* Updated revision */
+Designer Lev;
+Company  Vayner Systems;
+Assembly None;
+Location None;  
+Device   f1504ispplcc44;
 
-/* Custom Cupl code below */
-PIN 13 = MODE0;
-PIN 14 = MODE1;
-/* VERTICAL */
-PIN 1 = V0; /* PIN TYPES: INOUT TDI */
-PIN 2 = V1; 
-PIN 4 = V2; 
-PIN 5 = V3; 
-PIN 6 = V4; /* PIN TYPES: INOUT */
-PIN 7 = V5; /* PIN TYPES: INOUT TMS */
-PIN 8 = V6; /* PIN TYPES: INOUT */
-PIN 9 = V7; /* PIN TYPES: INOUT */
-PIN 11 = V8;
-PIN 12 = V9;
-NODE H_VISIBLE; /* INPUT FROM Horizontal timing PLD */
+PROPERTY ATMEL { jtag=on }; /* This keeps the JTAG pins on after programming */
+PROPERTY ATMEL { TMS_pullup=on };
+PROPERTY ATMEL { TDI_pullup=on };
+PROPERTY ATMEL { Preassign=keep }; /* This forces the Atmel Fitter to use the pin assignments you specify. */
 
+/* Pin Declarations */
+PIN 2   = CLK;         /* Clock input (40 MHz) */
+PIN [4..6,8,9,11,12,14,16,17]   =  [HQ0..HQ9];   /* 10-bit horizontal counter outputs */
+PIN [18..21,24..29] =  [VQ0..VQ9];   /* 10-bit vertical counter outputs */
+PIN 31  = HSYNC;       /* Horizontal sync output */
+PIN 33  = VSYNC;       /* Vertical sync output */
+PIN 34  = H_VIDEO_EN;  /* Horizontal Video enable signal */
+PIN 36  = V_VIDEO_EN;  /* Vertical Video enable signal (corrected pin conflict) */
+PIN 37  = VIDEO_EN;    /* Video enable signal (corrected pin conflict) */
 
-PIN 16 = !V_VISIBLE; /* PIN TYPES: INOUT */
-PIN 17 = V_F_PORCH; /* PIN TYPES: INOUT */
-PIN 18 = !V_SYNC; /* PIN TYPES: INOUT */
-PIN 19 = V_B_PORCH; /* PIN TYPES: INOUT */
-PIN 20 = !V_RESET_COUNTER;
-PIN 21 = !SCREEN_VISIBLE;
+/* Declare nodes for state machine */
+PINNODE = [HS3..0];
+PINNODE = [VS3..0];
 
+/* Declarations and Intermediate Variable Definitions */
+FIELD HCounter =    [HQ9..HQ0];    /* Horizontal counter */
+FIELD VCounter =    [VQ9..VQ0];    /* Vertical counter */
+FIELD HState =      [HS3..0];      /* Horizontal state machine */
+FIELD VState =      [VS3..0];      /* Vertical state machine */
 
-/* HORIZONTAL */
+/* VGA 800x600@60Hz Timing Parameters (40 MHz clock) */
+/* Horizontal Timing Constants */
+$DEFINE H_PULSE         'd'128  /* Horizontal sync pulse: 3.2us */
+$DEFINE H_BP            'd'88   /* Back porch: 2.2us */
+$DEFINE H_ACTIVE        'd'800  /* Active video: 20us */
+$DEFINE H_FP            'd'40   /* Front porch: 1us */
+$DEFINE H_TOTAL         'd'1056 /* Total pixels per line */
 
-PIN 24 = H0; /* PIN TYPES: INOUT TDI */
-PIN 25 = H1; 
-PIN 26 = H2; 
-PIN 27 = H3; 
-PIN 28 = H4; /* PIN TYPES: INOUT */
-PIN 29 = H5; /* PIN TYPES: INOUT TMS */
-PIN 31 = H6; /* PIN TYPES: INOUT */
-PIN 32 = H7; /* PIN TYPES: INOUT */
+$DEFINE H_BP_TO_ACTIVE  'd'215  /* Count when we transition from back porch to active (H_PULSE + H_BP - 1) */
+$DEFINE H_ACTIVE_TO_FP  'd'1015 /* Count when we transition from active to front porch (H_PULSE + H_BP + H_ACTIVE - 1) */
+$DEFINE H_RESET         'd'1055 /* Count when we reset horizontal counter (H_TOTAL - 1) */
 
+/* Vertical Timing Constants */
+$DEFINE V_PULSE         'd'4    /* Vertical sync pulse: 4 lines */
+$DEFINE V_BP            'd'23   /* Back porch: 23 lines */
+$DEFINE V_ACTIVE        'd'600  /* Active video: 600 lines */
+$DEFINE V_FP            'd'1    /* Front porch: 1 line */
+$DEFINE V_TOTAL         'd'628  /* Total lines per frame */
 
-/* PIN 36 = H_VISIBLE; */ /* PIN TYPES: INOUT */
-PIN 37 = H_F_PORCH; /* PIN TYPES: INOUT */
-PIN 38 = !H_SYNC; /* PIN TYPES: INOUT */
-PIN 39 = H_B_PORCH; /* PIN TYPES: INOUT */
-PIN 40 = !H_RESET_COUNTER; /* PIN TYPES: INOUT PD */
+$DEFINE V_BP_TO_ACTIVE  'd'26   /* Count when we transition from back porch to active (V_PULSE + V_BP - 1) */
+$DEFINE V_ACTIVE_TO_FP  'd'626  /* Count when we transition from active to front porch (V_PULSE + V_BP + V_ACTIVE - 1) */
+$DEFINE V_RESET         'd'627  /* Count when we reset vertical counter (V_TOTAL - 1) */
 
-
-
-FIELD HData = [MODE0, H7..0];  /*Assigns Data name to group of bits.*/
-FIELD H_Decodes =[H_VISIBLE, H_F_PORCH, H_SYNC, H_B_PORCH, H_RESET_COUNTER];
-
-
-TABLE HData => H_Decodes { /* 800x600 MODE, THEN 640x480 MODE */
-    [0..A0]     => 'b'10000;                   /* VISIBLE */
-    [A1..A8]    => 'b'01000;                   /* H_F_PORCH */
-    [A9..C1]    => 'b'00100;                   /* H_SYNC*/
-    [C2..D2]    => 'b'00010;                   /* H_B_PORCH */
-    [D3..FF]    => 'b'00001;                   /* H_RESET_COUNTER */
-    [100..1CB]  => 'b'10000;                   /* VISIBLE */
-    [1CC..1D0]  => 'b'01000;                   /* H_F_PORCH */
-    [1D1..1EF]  => 'b'00100;                   /* H_SYNC*/
-    [1F0..1FE]  => 'b'00010;                   /* H_B_PORCH */
-    [1FF]       => 'b'00001;                   /* H_RESET_COUNTER */
+/* State Machine Definitions */
+SEQUENCE HState {
+    PRESENT 0 /* HSYNC Pulse */
+        DEFAULT NEXT 1
+        OUT HSYNC;
+    PRESENT 1 /* Back Porch */
+        IF HCounter:H_BP_TO_ACTIVE NEXT 2;
+    PRESENT 2 /* Active Video */
+        IF HCounter:H_ACTIVE_TO_FP NEXT 3
+        OUT H_VIDEO_EN;
+    PRESENT 3 /* Front Porch */
+        IF HCounter:H_RESET NEXT 0;
 }
 
-FIELD vData = [MODE0, V9..0];  /*Assigns Data name to group of bits.*/
-FIELD V_Decodes =[ V_VISIBLE, V_F_PORCH, V_SYNC, V_B_PORCH, V_RESET_COUNTER];
-/* Pulse coming from first HC161 bit is 1/2 of the H_SYNC. */
-/* So timing calucation requires only half the rows */
-
-
-TABLE vData => V_Decodes {
-    [0..257]   => 'b'10000;                   /* VISIBLE */
-    [258]      => 'b'01000;                   /* V_F_PORCH */
-    [259..25C] => 'b'00100;                   /* V_SYNC*/
-    [25D..274] => 'b'00010;                   /* V_B_PORCH */
-    [275..3FF] => 'b'00001;                   /* V_RESET_COUNTER */
-    [400..5E0] => 'b'10000;                   /* VISIBLE */
-    [5E1..5EA] => 'b'01000;                   /* V_F_PORCH */
-    [5EB..5EC] => 'b'00100;                   /* V_SYNC*/
-    [5ED..60D] => 'b'00010;                   /* V_B_PORCH */
-    [60F..7FF] => 'b'00001;                   /* V_RESET_COUNTER */
+SEQUENCE VState {
+    PRESENT 0 /* VSYNC Pulse */
+        DEFAULT NEXT 1
+        OUT VSYNC;
+    PRESENT 1 /* Back Porch */
+        IF VCounter:V_BP_TO_ACTIVE NEXT 2;
+    PRESENT 2 /* Active Video */
+        IF VCounter:V_ACTIVE_TO_FP NEXT 3
+        OUT V_VIDEO_EN;
+    PRESENT 3 /* Front Porch */
+        IF VCounter:V_RESET NEXT 0;
 }
 
-SCREEN_VISIBLE = V_VISIBLE & H_VISIBLE;
+/* Logic Equations */
+VIDEO_EN.D = H_VIDEO_EN & V_VIDEO_EN;
+
+/* Horizontal Clock - counting */
+HQ0.D = !HQ0;           /* Bit 0 toggles every clock */
+HQ1.D = HQ1 $ HQ0;      /* Bit 1 toggles when HQ0=1 */
+HQ2.D = HQ2 $ (HQ1 & HQ0);
+HQ3.D = HQ3 $ (HQ2 & HQ1 & HQ0);
+HQ4.D = HQ4 $ (HQ3 & HQ2 & HQ1 & HQ0);
+HQ5.D = HQ5 $ (HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
+HQ6.D = HQ6 $ (HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
+HQ7.D = HQ7 $ (HQ6 & HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
+HQ8.D = HQ8 $ (HQ7 & HQ6 & HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
+HQ9.D = HQ9 $ (HQ8 & HQ7 & HQ6 & HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
+
+/* Vertical Clock - counting */
+VQ0.D = !VQ0;           /* Bit 0 toggles every clock */
+VQ1.D = VQ1 $ VQ0;      /* Bit 1 toggles when VQ0=1 */
+VQ2.D = VQ2 $ (VQ1 & VQ0);
+VQ3.D = VQ3 $ (VQ2 & VQ1 & VQ0);
+VQ4.D = VQ4 $ (VQ3 & VQ2 & VQ1 & VQ0);
+VQ5.D = VQ5 $ (VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
+VQ6.D = VQ6 $ (VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
+VQ7.D = VQ7 $ (VQ6 & VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
+VQ8.D = VQ8 $ (VQ7 & VQ6 & VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
+VQ9.D = VQ9 $ (VQ8 & VQ7 & VQ6 & VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
+
+/* Clock Enable */
+HSYNC.CK = CLK;
+VSYNC.CK = CLK;
+HCounter.CK = CLK;
+VIDEO_EN.CK = CLK;
+V_VIDEO_EN.CK = CLK;
+H_VIDEO_EN.CK = CLK;
+HState.CK = CLK;
+VState.CK = HCounter:H_RESET;
+
+
+/* Vertical counter clock */
+VCounter.CK = HCounter:H_RESET; 
+
+/* Reset conditions */
+HCounter.AR = HCounter:H_RESET;
+VCounter.AR = VCounter:V_RESET;

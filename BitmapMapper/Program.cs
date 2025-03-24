@@ -5,7 +5,7 @@ internal static class Program
 {
     public const string ARDUINO_PORT = "/dev/ttyACM0";
 
-    public static int BitmapWidth = 446;
+    public static int BitmapWidth = 432;
     //public static int BitmapPadWidth = 51;
     public static int BitmapHeight = 240;
     public static int BitmapPadHeight = 6;

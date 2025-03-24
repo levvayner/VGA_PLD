@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BitmapMapper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6f6bcbf6b150e2425be8350e5b327a36df2219e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c8ba74ea9ec4d757f6eabe501379054e234e785")]
 [assembly: System.Reflection.AssemblyProductAttribute("BitmapMapper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BitmapMapper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

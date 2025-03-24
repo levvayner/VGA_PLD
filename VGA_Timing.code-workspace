@@ -1,6 +1,10 @@
 {
 	"folders": [
         {
+            "name": "VGA_COUNTER_HORIZONTAL",
+            "path": "VGA_COUNTER_HORIZONTAL"
+        },
+        {
             "name": "VGA_SINGLE_PLD",
             "path": "VGA_SINGLE_PLD"
         },

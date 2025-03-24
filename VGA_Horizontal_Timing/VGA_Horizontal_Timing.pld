@@ -19,6 +19,7 @@ PIN 7 = C6; /* PIN TYPES: INOUT */
 PIN 8 = C7; /* PIN TYPES: INOUT */
 PIN 9 = C8;
 PIN 10 = C9;
+PIN 23 = C10;
 
 
 PIN 16 = H_VISIBLE; /* PIN TYPES: INOUT */
@@ -28,16 +29,23 @@ PIN 19 = H_B_PORCH; /* PIN TYPES: INOUT */
 PIN 20 = !H_RESET_COUNTER; /* PIN TYPES: INOUT PD */
 
 
-FIELD Data = [C9..0];  /*Assigns Data name to group of bits.*/
+FIELD Data = [C10..0];  /*Assigns Data name to group of bits.*/
 FIELD H_Decodes =[ H_F_PORCH, H_SYNC, H_B_PORCH, H_RESET_COUNTER];
-
-
+/*Horizontal Order: Sync, Back Porch, Display, Front Porch  */
+/* MR / Counter reset after back porch is done */
 TABLE Data => H_Decodes {
-    /*[0..1A4]      => 'b'10000; */                /* VISIBLE */
-    [1B1..1BA]    => 'b'1000;                  /* H_F_PORCH */
-    [1BB..1E0]    => 'b'0100;                  /* H_SYNC*/
-    [1E1..1EF]    => 'b'0010;                  /* H_B_PORCH */
-    [1F0..1FF]    => 'b'0001;                  /* H_RESET_COUNTER */
+    /* Resolution 1 , 1024 x 768 @ 60Hz / 40MHz - effective 630 x 384 */   
+    [000..276]    => 'b'10000;                  /* H_VISIBLE */ 
+    [277..285]    => 'b'01000;                  /* H_F_PORCH */
+    [286..2D9]    => 'b'00100;                  /* H_SYNC*/
+    [2DA..33B]    => 'b'00010;                  /* H_B_PORCH */
+    [33C..39F]    => 'b'00001;                  /* H_RESET_COUNTER */
+    /* Resolution 2 , 800x600 @ 16MHz  */
+    [400..53F]    => 'b'10000;                  /* H_VISIBLE */ 
+    [540..55E]    => 'b'01000;                  /* H_F_PORCH */
+    [55F..56E]    => 'b'00100;                  /* H_SYNC*/
+    [56F..58E]    => 'b'00010;                  /* H_B_PORCH */
+    [58F..5AF]    => 'b'00001;                  /* H_RESET_COUNTER */
 }
-H_VISIBLE = !H_F_PORCH & !H_SYNC & !H_B_PORCH & !H_RESET_COUNTER;
+/* H_VISIBLE = !H_F_PORCH & !H_SYNC & !H_B_PORCH & !H_RESET_COUNTER; */
 

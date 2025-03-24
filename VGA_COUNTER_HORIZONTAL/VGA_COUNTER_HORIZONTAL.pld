@@ -1,0 +1,14 @@
+Name     VGA_COUNTER_HORIZONTAL ;
+PartNo   GAL22V10C ;
+Date     2/7/2025, 1:42:54 AM ;
+Revision 01 ;
+Designer Lev Vayner ;
+Company   ;
+Assembly None ;
+Location  ;
+Device   g22v10 ;
+
+/* Custom Cupl code below */
+PIN 1 = CLK; /* PIN TYPES: IN CLK */
+PIN 2 = D0; /* PIN TYPES: IN */
+

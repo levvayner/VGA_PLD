@@ -47,8 +47,13 @@ class PortReader
             //port.Write(new[] { (byte)'c' },0,1);
             var outStream = port.BaseStream;
             EstablishProgrammingMode(outStream);
-            
-                            
+
+            buffer[0] = 0;
+            Console.WriteLine("Passing program type as {0}", buffer[0]);
+            //buffer[0] = (byte)((byte)(data.Count >> 8) & 0xFF);
+            //buffer[1] = (byte)(data.Count & 0xFF);
+            outStream.Write(buffer, 0, 1);
+            ReadBytes(1, outStream);
             string byteCount = data.Count.ToString();
             Array.Copy(Encoding.ASCII.GetBytes(byteCount), buffer, byteCount.Length);
             Console.WriteLine("Passing byte count as {0}", Convert.ToString(data.Count, 10));
@@ -160,12 +165,13 @@ class PortReader
     {
 
         //var outStream = port.BaseStream;
-        ReadBytes(16, outStream); //get first ten into lines   
+        ReadBytes(38, outStream); //get first ten into lines   
 
         Console.WriteLine("---------------------");
         //Console.Write(">> ");
-        Array.Copy(Encoding.ASCII.GetBytes("S"), buffer, 1);
-        outStream.Write(buffer, 0, 1);
+        Array.Copy(Encoding.ASCII.GetBytes("program"), buffer, "program".Length);
+        outStream.Write(buffer, 0, "program".Length);
+        outStream.WriteByte(10);
         ReadBytes(1, outStream);
         Console.WriteLine("Established mode as write.. setting type to programming");
 
@@ -174,8 +180,10 @@ class PortReader
         
         Array.Copy(Encoding.ASCII.GetBytes("START_PROGRAM"), buffer, 13);
         outStream.Write(buffer, 0, 13);
+        //outStream.WriteByte(10);
         ReadBytes(1, outStream);            
-        Console.WriteLine("Established handshake from remote server.. ready to write program ");            
+        Console.WriteLine("Established handshake from remote server.. ready to write program ");   
+        Thread.Sleep(50);         
     }
 
     private string[] ReadBytes(int linesToRead,Stream outStream, int timeout = 5, bool throwErrorOnEmpty = false)
