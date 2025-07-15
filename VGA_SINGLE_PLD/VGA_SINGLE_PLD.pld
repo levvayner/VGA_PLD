@@ -1,129 +1,153 @@
-Name     VGATiming;
-PartNo   ATF1504AS;
-Date     03/13/2025;  /* Updated to current date */
-Revision 02;          /* Updated revision */
-Designer Lev;
-Company  Vayner Systems;
-Assembly None;
-Location None;  
-Device   f1504ispplcc44;
+NAME VGA_TIMING_800x600;
+PARTNO ATF1504AS;
+DATE 07-12-2025;
+REVISION 14;
+DESIGNER Lev Vayner;
+COMPANY Vayner Systems;
+ASSEMBLY DUAL BUFFER VGA;
+LOCATION U1;
+Device f1504ispplcc44;
 
-PROPERTY ATMEL { jtag=on }; /* This keeps the JTAG pins on after programming */
-PROPERTY ATMEL { TMS_pullup=on };
-PROPERTY ATMEL { TDI_pullup=on };
-PROPERTY ATMEL { Preassign=keep }; /* This forces the Atmel Fitter to use the pin assignments you specify. */
+/* MCU Ready Input, active low */
+Pin 1 = RDY;
+/* Clock input */
+Pin 2 = CLK;
 
-/* Pin Declarations */
-PIN 2   = CLK;         /* Clock input (40 MHz) */
-PIN [4..6,8,9,11,12,14,16,17]   =  [HQ0..HQ9];   /* 10-bit horizontal counter outputs */
-PIN [18..21,24..29] =  [VQ0..VQ9];   /* 10-bit vertical counter outputs */
-PIN 31  = HSYNC;       /* Horizontal sync output */
-PIN 33  = VSYNC;       /* Vertical sync output */
-PIN 34  = H_VIDEO_EN;  /* Horizontal Video enable signal */
-PIN 36  = V_VIDEO_EN;  /* Vertical Video enable signal (corrected pin conflict) */
-PIN 37  = VIDEO_EN;    /* Video enable signal (corrected pin conflict) */
+/* Horizontal Counter (10-bit) */
+Pin 4  = HC0;
+Pin 5  = HC1;
+Pin 6  = HC2;
+Pin 8  = HC3;
+Pin 9  = HC4;
+Pin 11 = HC5;
+Pin 12 = HC6;
+Pin 14 = HC7;
+Pin 16 = HC8;
+Pin 17 = HC9;
 
-/* Declare nodes for state machine */
-PINNODE = [HS3..0];
-PINNODE = [VS3..0];
+/* Vertical Counter (10-bit) */
+Pin 18 = VC0;
+Pin 19 = VC1;
+Pin 20 = VC2;
+Pin 21 = VC3;
+Pin 24 = VC4;
+Pin 25 = VC5;
+Pin 26 = VC6;
+Pin 27 = VC7;
+Pin 28 = VC8;
+Pin 29 = VC9;
 
-/* Declarations and Intermediate Variable Definitions */
-FIELD HCounter =    [HQ9..HQ0];    /* Horizontal counter */
-FIELD VCounter =    [VQ9..VQ0];    /* Vertical counter */
-FIELD HState =      [HS3..0];      /* Horizontal state machine */
-FIELD VState =      [VS3..0];      /* Vertical state machine */
+/* Output signals */
+Pin 33 = HSYNC;
+Pin 34 = VSYNC;
+PIN 36 = MCU_BANK_SELECT;
+Pin 39 = V_OUT;
 
-/* VGA 800x600@60Hz Timing Parameters (40 MHz clock) */
-/* Horizontal Timing Constants */
-$DEFINE H_PULSE         'd'128  /* Horizontal sync pulse: 3.2us */
-$DEFINE H_BP            'd'88   /* Back porch: 2.2us */
-$DEFINE H_ACTIVE        'd'800  /* Active video: 20us */
-$DEFINE H_FP            'd'40   /* Front porch: 1us */
-$DEFINE H_TOTAL         'd'1056 /* Total pixels per line */
+PINNODE 81 = RDY_1;
+PINNODE 86 = RDY_LATCH;
+PINNODE 87 = VC_IS_599;
+/* ---------------- Horizontal Counter (0-1023, should be 1056, cheating a bit, monitor should allow it ) ---------------- */
+HC0.d  = !HC0;
+HC0.ck = CLK;
 
-$DEFINE H_BP_TO_ACTIVE  'd'215  /* Count when we transition from back porch to active (H_PULSE + H_BP - 1) */
-$DEFINE H_ACTIVE_TO_FP  'd'1015 /* Count when we transition from active to front porch (H_PULSE + H_BP + H_ACTIVE - 1) */
-$DEFINE H_RESET         'd'1055 /* Count when we reset horizontal counter (H_TOTAL - 1) */
+HC1.d  = HC1 $ HC0;
+HC1.ck = CLK;
 
-/* Vertical Timing Constants */
-$DEFINE V_PULSE         'd'4    /* Vertical sync pulse: 4 lines */
-$DEFINE V_BP            'd'23   /* Back porch: 23 lines */
-$DEFINE V_ACTIVE        'd'600  /* Active video: 600 lines */
-$DEFINE V_FP            'd'1    /* Front porch: 1 line */
-$DEFINE V_TOTAL         'd'628  /* Total lines per frame */
+HC2.d  = HC2 $ (HC1 & HC0);
+HC2.ck = CLK;
 
-$DEFINE V_BP_TO_ACTIVE  'd'26   /* Count when we transition from back porch to active (V_PULSE + V_BP - 1) */
-$DEFINE V_ACTIVE_TO_FP  'd'626  /* Count when we transition from active to front porch (V_PULSE + V_BP + V_ACTIVE - 1) */
-$DEFINE V_RESET         'd'627  /* Count when we reset vertical counter (V_TOTAL - 1) */
+HC3.d  = HC3 $ (HC2 & HC1 & HC0);
+HC3.ck = CLK;
 
-/* State Machine Definitions */
-SEQUENCE HState {
-    PRESENT 0 /* HSYNC Pulse */
-        DEFAULT NEXT 1
-        OUT HSYNC;
-    PRESENT 1 /* Back Porch */
-        IF HCounter:H_BP_TO_ACTIVE NEXT 2;
-    PRESENT 2 /* Active Video */
-        IF HCounter:H_ACTIVE_TO_FP NEXT 3
-        OUT H_VIDEO_EN;
-    PRESENT 3 /* Front Porch */
-        IF HCounter:H_RESET NEXT 0;
-}
+HC4.d  = HC4 $ (HC3 & HC2 & HC1 & HC0);
+HC4.ck = CLK;
 
-SEQUENCE VState {
-    PRESENT 0 /* VSYNC Pulse */
-        DEFAULT NEXT 1
-        OUT VSYNC;
-    PRESENT 1 /* Back Porch */
-        IF VCounter:V_BP_TO_ACTIVE NEXT 2;
-    PRESENT 2 /* Active Video */
-        IF VCounter:V_ACTIVE_TO_FP NEXT 3
-        OUT V_VIDEO_EN;
-    PRESENT 3 /* Front Porch */
-        IF VCounter:V_RESET NEXT 0;
-}
+HC5.d  = HC5 $ (HC4 & HC3 & HC2 & HC1 & HC0);
+HC5.ck = CLK;
 
-/* Logic Equations */
-VIDEO_EN.D = H_VIDEO_EN & V_VIDEO_EN;
+HC6.d  = HC6 $ (HC5 & HC4 & HC3 & HC2 & HC1 & HC0);
+HC6.ck = CLK;
 
-/* Horizontal Clock - counting */
-HQ0.D = !HQ0;           /* Bit 0 toggles every clock */
-HQ1.D = HQ1 $ HQ0;      /* Bit 1 toggles when HQ0=1 */
-HQ2.D = HQ2 $ (HQ1 & HQ0);
-HQ3.D = HQ3 $ (HQ2 & HQ1 & HQ0);
-HQ4.D = HQ4 $ (HQ3 & HQ2 & HQ1 & HQ0);
-HQ5.D = HQ5 $ (HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
-HQ6.D = HQ6 $ (HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
-HQ7.D = HQ7 $ (HQ6 & HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
-HQ8.D = HQ8 $ (HQ7 & HQ6 & HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
-HQ9.D = HQ9 $ (HQ8 & HQ7 & HQ6 & HQ5 & HQ4 & HQ3 & HQ2 & HQ1 & HQ0);
+HC7.d  = HC7 $ (HC6 & HC5 & HC4 & HC3 & HC2 & HC1 & HC0);
+HC7.ck = CLK;
 
-/* Vertical Clock - counting */
-VQ0.D = !VQ0;           /* Bit 0 toggles every clock */
-VQ1.D = VQ1 $ VQ0;      /* Bit 1 toggles when VQ0=1 */
-VQ2.D = VQ2 $ (VQ1 & VQ0);
-VQ3.D = VQ3 $ (VQ2 & VQ1 & VQ0);
-VQ4.D = VQ4 $ (VQ3 & VQ2 & VQ1 & VQ0);
-VQ5.D = VQ5 $ (VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
-VQ6.D = VQ6 $ (VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
-VQ7.D = VQ7 $ (VQ6 & VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
-VQ8.D = VQ8 $ (VQ7 & VQ6 & VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
-VQ9.D = VQ9 $ (VQ8 & VQ7 & VQ6 & VQ5 & VQ4 & VQ3 & VQ2 & VQ1 & VQ0);
+HC8.d  = HC8 $ (HC7 & HC6 & HC5 & HC4 & HC3 & HC2 & HC1 & HC0);
+HC8.ck = CLK;
 
-/* Clock Enable */
-HSYNC.CK = CLK;
-VSYNC.CK = CLK;
-HCounter.CK = CLK;
-VIDEO_EN.CK = CLK;
-V_VIDEO_EN.CK = CLK;
-H_VIDEO_EN.CK = CLK;
-HState.CK = CLK;
-VState.CK = HCounter:H_RESET;
+HC9.d  = HC9 $ (HC8 & HC7 & HC6 & HC5 & HC4 & HC3 & HC2 & HC1 & HC0);
+HC9.ck = CLK;
+/* Wrap signals for horizontal and vertical lines */
+H_WRAP = HC9 & HC8 & HC7 & HC6 & HC5 & HC4 & HC3 & HC2 & HC1 & HC0;
+V_WRAP = VC9 & VC6 & VC5 & VC3 ;
+
+/* ---------------- Vertical Counter (limit 628) ---------------- */
+VC0.d = (VC0 $ (H_WRAP # V_WRAP)) & !V_WRAP;
+VC0.ck = CLK;
+
+VC1.d = (VC1 $ (VC0 & H_WRAP)) & !V_WRAP;
+VC1.ck = CLK;
+
+VC2.d = (VC2 $ (VC1 & VC0 & H_WRAP)) & !V_WRAP;
+VC2.ck = CLK;
+
+VC3.d = (VC3 $ (VC2 & VC1 & VC0 & H_WRAP)) & !V_WRAP;
+VC3.ck = CLK;
+
+VC4.d = (VC4 $ (VC3 & VC2 & VC1 & VC0 & H_WRAP)) & !V_WRAP;
+VC4.ck = CLK;
+
+LOW5 = VC4 & VC3 & VC2 & VC1 & VC0 & H_WRAP;
+
+VC5.d = (VC5 $ LOW5) & !V_WRAP;
+VC5.ck = CLK;
+
+VC6.d = (VC6 $ (VC5 & LOW5)) & !V_WRAP;
+VC6.ck = CLK;
+
+VC7.d = (VC7 $ (VC6 & VC5 & LOW5)) & !V_WRAP;
+VC7.ck = CLK;
+
+VC8.d = (VC8 $ (VC7 & VC6 & VC5 & LOW5)) & !V_WRAP;
+VC8.ck = CLK;
+
+VC9.d = (VC9 $ VC8 & VC7 & VC6 & VC5 & LOW5) & !V_WRAP;
+VC9.ck = CLK;
 
 
-/* Vertical counter clock */
-VCounter.CK = HCounter:H_RESET; 
+/* ---------------- Output Signals ---------------- */
 
-/* Reset conditions */
-HCounter.AR = HCounter:H_RESET;
-VCounter.AR = VCounter:V_RESET;
+/* HSYNC: active low from HC = 832 to 959 (approx) */
+HSYNC = !(HC9 & HC8 & !HC7);
+
+/* H_VIDEO_OUT: active when HC < 800, V_VIDEO_OUT < 600 */
+H_VIDEO_OUT = !(HC9 & HC8) # (!HC7 & !HC6 & !HC5);
+V_VIDEO_OUT= !VC9 # ( !VC8 & !VC7 & (!VC6 # !VC4));
+
+/* VSYNC: active low during VC = 601-604 */
+VSYNC = !(VC9 & VC6 & VC4 & VC3 & !VC2);
+/* Composite video enable, active LOW */
+V_OUT = !(H_VIDEO_OUT & V_VIDEO_OUT);
+
+
+/* Generate toggle of memory banks when READY input goes high. flip after visible area */
+/* Last RDY state */
+RDY_1.d = RDY;
+RDY_1.ck = CLK;
+
+/* Rising edge pulse */
+RDY_R = RDY & !RDY_1;
+
+VC_IS_599 = VC9 & !VC7 & VC6 & !VC5 & VC4 & !VC3 & VC2 & VC1 & VC0;
+
+/* Latch RDY_R until VC_IS_599 comes */
+RDY_LATCH.d = RDY_R # (RDY_LATCH & !VC_IS_599);
+RDY_LATCH.ck = CLK;
+
+/* Final toggle condition */
+TOGGLE_COND = RDY_LATCH & VC_IS_599;
+
+/* Toggle MCU_BANK_SELECT */
+MCU_BANK_SELECT.d = MCU_BANK_SELECT $ TOGGLE_COND;
+MCU_BANK_SELECT.ck = CLK;
+
+

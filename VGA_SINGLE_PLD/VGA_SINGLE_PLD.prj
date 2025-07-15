@@ -1,11 +1,15 @@
 {
+    "projectName": "VGA_SINGLE_PLD",
+    "deviceUniqueName": "ATF1504AS",
     "manufacturer": "atmel",
     "packageType": "plcc",
     "pinCount": 44,
-    "deviceCode": "f1504plcc44",
+    "deviceCode": "f1504ispplcc44",
     "deviceName": "ATF1504AS, ATF1504ASL, ATF1504ASV, ATF1504ASVL",
     "programmer": "atmisp",
     "pinConfiguration": "f1504",
     "openOCDDeviceCode": "150403f",
-    "deviceUniqueName": "ATF1504AS"
+    "deviceOptions": [
+        "ISP"
+    ]
 }

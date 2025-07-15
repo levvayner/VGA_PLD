@@ -1,12 +1,13 @@
 {
 	"folders": [
-		{
-			"name": "VGA_SINGLE_PLD",
-			"path": "."
-		}
+        {
+            "name": "VGA_SINGLE_PLD",
+            "path": "."
+        }
     ],
     "settings": {
         "vs-cupl.PathOpenOcd": "/usr/bin/openocd",
-        "vs-cupl.PathOpenOcdDl": "/usr/share/openocd"
+        "vs-cupl.PathOpenOcdDl": "/usr/share/openocd",
+        "vs-cupl.IsLinux": true
     }
 }
