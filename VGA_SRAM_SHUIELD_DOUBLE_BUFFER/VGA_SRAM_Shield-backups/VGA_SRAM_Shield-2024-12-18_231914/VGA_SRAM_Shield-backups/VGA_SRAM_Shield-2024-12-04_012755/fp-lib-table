@@ -1,4 +1,0 @@
-(fp_lib_table
-  (version 7)
-  (lib (name "arduino-library")(type "KiCad")(uri "/home/vsadmin/Projects/Personal/KiCad/arduino-kicad-library/footprints/arduino-library.pretty")(options "")(descr ""))
-)

@@ -1,6 +1,14 @@
 {
 	"folders": [
         {
+            "name": "tr22",
+            "path": "../../../VSExtensions/sandbox/tr22"
+        },
+        {
+            "name": "vga_ripple",
+            "path": "../vga_ripple"
+        },
+        {
             "name": "VGA_SINGLE_PLD",
             "path": "."
         }
