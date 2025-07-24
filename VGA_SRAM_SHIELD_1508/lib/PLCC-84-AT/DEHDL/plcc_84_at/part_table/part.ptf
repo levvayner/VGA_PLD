@@ -1,0 +1,11 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART 'PLCC_84_AT'
+CLASS = IO
+{========================================================================================}
+:"MANUFACTURER_NAME", "MANUFACTURER_PART_NUMBER"= "PART_NUMBER", "JEDEC_TYPE", "PACK_TYPE", "MOUSER_PART_NUMBER", "MOUSER_PRICE/STOCK", "ARROW_PART_NUMBER", "ARROW_PRICE/STOCK", "DESCRIPTION", "DATASHEET", "HEIGHT";
+{========================================================================================}
+ "Adam Tech", "PLCC-84-AT" (!) = "", "PLCC84AT", "Other", "737-PLCC-84-AT", "https://www.mouser.co.uk/ProductDetail/Adam-Tech/PLCC-84-AT?qs=WZRMhwwaLl%252BQXivbVJuNIw%3D%3D", "PLCC-84-AT", "https://www.arrow.com/en/products/plcc-84-at/adam-tech?utm_currency=USD&region=nac", "84 (4 x 21) Pos PLCC Socket Tin Through Hole 55C ~ 105C ,1 A 30mOhm 0.050" (1.27mm) ", "https://app.adam-tech.com/products/download/data_sheet/198227/plcc-84-at-data-sheet.pdf", "8.4836 mm"
+END_PART
+
+END.

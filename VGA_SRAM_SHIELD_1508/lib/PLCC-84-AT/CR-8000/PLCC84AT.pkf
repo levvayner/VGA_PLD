@@ -1,0 +1,10 @@
+(unit MM)
+
+(package "PLCC84AT"
+    (type UNDEF)
+    (uver 2)
+    (mountForm default
+        (footprintRef "PLCC84AT")
+        (spec "default")
+    )
+)

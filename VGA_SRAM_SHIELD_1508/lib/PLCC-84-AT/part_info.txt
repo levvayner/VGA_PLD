@@ -1,0 +1,9 @@
+Manufacturer=Adam Tech
+PartNumber=PLCC-84-AT
+PartCategory=Connector
+PackageCategory=Other
+PinCount=84
+Version=1.5
+Released=2025-01-18 13:35:47
+Downloaded=2025-07-18 11:53:06
+3D=Y

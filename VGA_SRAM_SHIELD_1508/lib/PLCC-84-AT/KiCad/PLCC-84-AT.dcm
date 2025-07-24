@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP PLCC-84-AT
+D 84 (4 x 21) Pos PLCC Socket Tin Through Hole 55C ~ 105C ,1 A 30mOhm 0.050" (1.27mm) 
+K
+F https://app.adam-tech.com/products/download/data_sheet/198227/plcc-84-at-data-sheet.pdf
+$ENDCMP
+#
+#End Doc Library

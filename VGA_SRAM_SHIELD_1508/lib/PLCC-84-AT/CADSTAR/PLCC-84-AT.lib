@@ -1,0 +1,20 @@
+.PLCC-84-AT :1 ;84 (4 x 21) Pos PLCC Socket Tin Through Hole 55C ~ 105C ,1 A 30mOhm 0.050" (1.27mm) 
+PLCC84AT
+*STM J
+*NGS
+*PLB 1="1" 2="2" 3="3" 4="4" 5="5" 6="6" 7="7" 8="8" 9="9" 10="10" 11="11" 12="12" 13="13" 14="14" 15="15" 16="16" 17="17" 18="18" 19="19" 20="20" 21="21" 22="22" 23="23" 24="24" 25="25" 26="26" 27="27" 28="28" 29="29" 30="30" 31="31" 32="32" 33="33" 34="34" 35="35" 36="36" 37="37" 38="38" 39="39" 40="40" 41="41" 42="42" 43="43" 44="44" 45="45" 46="46" 47="47" 48="48" 49="49" 50="50" 51="51" 52="52" 53="53" 54="54" 55="55" 56="56" 57="57" 58="58" 59="59" &
+60="60" 61="61" 62="62" 63="63" 64="64" 65="65" 66="66" 67="67" 68="68" 69="69" 70="70" 71="71" 72="72" 73="73" 74="74" 75="75" 76="76" 77="77" 78="78" 79="79" 80="80" 81="81" 82="82" 83="83" 84="84"
+*MXP 84
+*DFN PLCC-84-AT
+~!Manufacturer_Name (Adam Tech)
+~!Manufacturer_Part_Number (PLCC-84-AT)
+~!Mouser Part Number (737-PLCC-84-AT)
+~!Link Mouser Price/Stock (https://www.mouser.co.uk/ProductDetail/Adam-Tech/PLCC-84-AT?qs=WZRMhwwaLl%252BQXivbVJuNIw%3D%3D)
+~!Arrow Part Number (PLCC-84-AT)
+~!Link Arrow Price/Stock (https://www.arrow.com/en/products/plcc-84-at/adam-tech?utm_currency=USD&region=nac)
+~!Link Datasheet (https://app.adam-tech.com/products/download/data_sheet/198227/plcc-84-at-data-sheet.pdf)
+~!Height (8.4836mm)
+~!3D_Model (PLCC-84-AT)
+PLCC-84-AT
+1.1!U 2.1!U 3.1!U 4.1!U 5.1!U 6.1!U 7.1!U 8.1!U 9.1!U 10.1!U 11.1!U 12.1!U 13.1!U 14.1!U 15.1!U 16.1!U 17.1!U 18.1!U 19.1!U 20.1!U 21.1!U 22.1!U 23.1!U 24.1!U 25.1!U 26.1!U 27.1!U 28.1!U 29.1!U 30.1!U 31.1!U 32.1!U 33.1!U 34.1!U 35.1!U 36.1!U 37.1!U 38.1!U 39.1!U 40.1!U 41.1!U 42.1!U 43.1!U 44.1!U 45.1!U 46.1!U 47.1!U 48.1!U 49.1!U 50.1!U 51.1!U 52.1!U 53.1!U 54.1!U 55.1!U 56.1!U 57.1!U 58.1!U 59.1!U 60.1!U 61.1!U 62.1!U 63.1!U 64.1!U 65.1!U 66.1!U &
+67.1!U 68.1!U 69.1!U 70.1!U 71.1!U 72.1!U 73.1!U 74.1!U 75.1!U 76.1!U 77.1!U 78.1!U 79.1!U 80.1!U 81.1!U 82.1!U 83.1!U 84.1!U 
